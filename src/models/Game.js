@@ -18,7 +18,7 @@ class GamesModel {
     }
 
     static destroy(id) {
-        let request = axios.delete("https://sleepy-forest-26880.herokuapp.com/api/games/" + id)
+        let request = axios.delete("https://sleepy-forest-26880.herokuapp.com/api/games/" + id + ".json")
         return request
     }
 
