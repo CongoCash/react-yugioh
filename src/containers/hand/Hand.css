@@ -1,0 +1,16 @@
+.row.match-my-cols {
+    overflow: hidden;
+}
+
+.row.match-my-cols [class*="col-"]{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+.card {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    min-width: 68px;
+}
+

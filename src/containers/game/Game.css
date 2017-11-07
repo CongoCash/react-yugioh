@@ -1,0 +1,26 @@
+.row.match-my-cols {
+    overflow: hidden;
+}
+
+.row.match-my-cols [class*="col-"]{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+.hand {
+    padding: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.lifepoints {
+    color: yellow;
+    background-color: blue;
+    display: inline;
+}
+
+.padding-between-lifepoints{
+    margin: 15px;
+}

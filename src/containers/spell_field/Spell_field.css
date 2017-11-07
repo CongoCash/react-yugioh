@@ -1,0 +1,5 @@
+.card {
+    padding: 0;
+    box-sizing: border-box;
+    min-width: 60px;
+}
