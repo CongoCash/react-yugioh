@@ -72,24 +72,24 @@ class App extends Component {
             <div className="App">
                 <div className='stage'>
                     <Start />
-                    <h1>Chat</h1>
-                    <div className='chat-logs'>
-                    </div>
-                    <input
-                        onKeyPress={ (e) => this.handleChatInputKeyPress(e) }
-                        value={ this.state.currentChatMessage }
-                        onChange={ (e) => this.updateCurrentChatMessage(e) }
-                        type='text'
-                        placeholder='Enter your message...'
-                        className='chat-input' />
-                    <button
-                        onClick={ (e) => this.handleSendEvent(e) }
-                        className='send'>
-                        Send
-                    </button>
-                    <ul className='chat-logs'>
-                        { this.renderChatLog() }
-                    </ul>
+                    {/*<h1>Chat</h1>*/}
+                    {/*<div className='chat-logs'>*/}
+                    {/*</div>*/}
+                    {/*<input*/}
+                        {/*onKeyPress={ (e) => this.handleChatInputKeyPress(e) }*/}
+                        {/*value={ this.state.currentChatMessage }*/}
+                        {/*onChange={ (e) => this.updateCurrentChatMessage(e) }*/}
+                        {/*type='text'*/}
+                        {/*placeholder='Enter your message...'*/}
+                        {/*className='chat-input' />*/}
+                    {/*<button*/}
+                        {/*onClick={ (e) => this.handleSendEvent(e) }*/}
+                        {/*className='send'>*/}
+                        {/*Send*/}
+                    {/*</button>*/}
+                    {/*<ul className='chat-logs'>*/}
+                        {/*{ this.renderChatLog() }*/}
+                    {/*</ul>*/}
                 </div>
             </div>
         );

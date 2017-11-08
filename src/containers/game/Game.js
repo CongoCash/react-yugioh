@@ -26,7 +26,7 @@ class Game extends Component {
             selected_has_attacked: '', first_turn: '',
             winner: '', selected_card: '', current_move: '',
             exodia1: [], exodia2: [], selected_sacrifices: [],
-            selected_spell: '',
+            selected_spell: '', exodia_win: "",
         }
     }
 
@@ -69,7 +69,7 @@ class Game extends Component {
         YugisModel.cards().then((res) => {
             let data = res.data
             let shuffle_deck1 = shuffle(data)
-            let hand1 = shuffle_deck1.slice(0,5)
+            let hand1 = shuffle_deck1.slice(0,4)
             let deck1 = shuffle_deck1.slice(5)
 
             this.setState({
@@ -149,6 +149,7 @@ class Game extends Component {
                 this.setState({
                     hand1: this.state.hand1,
                     has_drawn: true,
+                    phase: 1
                 }, function() {
                     this.winCondition()
                 })
@@ -881,7 +882,10 @@ class Game extends Component {
 
         if (this.state.exodia1.length === 5) {
             this.setState({
-                winner: 'Player 1'
+                winner: 'Player 1',
+                exodia_win: 'obliterate'
+            }, function() {
+                console.log(this.state.exodia_win)
             })
         }
         else{
@@ -945,7 +949,6 @@ class Game extends Component {
     }
 
 
-
     render() {
         let phase = (this.state.phase !== 4)
         let attack_button =
@@ -953,10 +956,12 @@ class Game extends Component {
             (this.state.phase === 2) &&
             (this.state.target_selected || this.state.monster_field1.length === 0 || this.state.monster_field2.length === 0)
         let winCondition = (this.state.winner.length !== 0)
+        let exodia = (this.state.winner.length !== 0 && this.state.exodia_win.length !== 0)
         console.log(this.state.lifepoints2, 'lp2')
         return(
             <div className="container-fluid">
                 <div className="row">
+                    {exodia ? <img src="https://m.popkey.co/e7ecda/874xK.gif"/> : ""}
                     <div className="col-sm-1">
                         <img onClick={this.drawCard.bind(this)} alt="Deck 2" height="100" width="68" src={"https://i.pinimg.com/originals/ed/b7/02/edb702c8400d4b0c806d964380b03b6a.jpg"}/>
                     </div>
@@ -1004,7 +1009,8 @@ class Game extends Component {
                         <h3>Player 1 Lifepoints: {this.state.lifepoints1}</h3>
                         <ProgressBar active now={this.state.lifepoints1/8000*100} />
                         <hr></hr>
-                        <button className="btn btn-primary" onClick={this.endPhase.bind(this)}>End Phase</button>
+                        {!winCondition ? <button className="btn btn-primary" onClick={this.endPhase.bind(this)}>End Phase</button>
+                            : <button className="btn btn-primary disabled" onClick={this.endPhase.bind(this)}>Game Over</button>}
                         {this.state.monster_selected && !this.state.selected_monster.spell_played && this.state.phase === 1
                         && this.state.spell_field1.length < 5 && this.state.selected_monster.card_type ==="Spell"
                         && this.state.turn === "player1"?
