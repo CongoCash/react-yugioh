@@ -14,18 +14,44 @@ class Game extends Component {
             player1: "", player2: "",
             lifepoints1: "", lifepoints2: '',
             turn: '', phase: '', phase_name: '',
+
+            // SEVERAL OPTIONS FOR MAKING THIS FILE SHORTER
+            // IN ORDER OF INCREASING DIFFICULTY (BUT PERHAPS LONGER-TERM MAINTAINABILITY)
+
+            // OPTION 1: 
+            // Extract related functions into separate files
+            // e.g. instead of having 1100 lines of code in this file, you could group all "phase"-related functions
+            // in a separate file called "phase.js" and module.exports each function in it.
+            // Then, you would require it in this component and just invoke the necessary functions
+
+            // OPTION 2: 
+            // Any state key that comes in pairs (per player) could be in the Board component
+            // e.g. deck1 & deck2 could be set as state in Board component and passed to the <Hand/>s there;
+            // Same with monster_field1/2 & monster_slots1/2 & spell_field1/2 & spell_slots1/2 (passed to <MonsterField/> and <SpellField/>)
+
+            // Reasoning for this is at that point, that is logic that is specific to each player
+            // and not necessary at the game level. You could even create a <Player/> component for each half of the board
+
+            // This will get hairy / will require passing up & down certain props/fcns from the Game component to hook it up.
+            // This is someplace where Redux would be super helpful to make it simpler
+
+            // OPTION 3: 
+            // Implement Option 2, but use Redux so you don't have to pass up & down props/fcns between parent/child components. 
+
             deck1: [], deck2: [], hand1: [], hand2: [],
             monster_field1: [], monster_field2: [],
             monster_slots1: [], monster_slots2: [],
             spell_field1: [], spell_field2: [],
             spell_slots1: [], spell_slots2: [],
+            exodia1: [], exodia2: [],
+
             monster_selected: '', selected_monster: '',
             monster_played: '', has_drawn: '',
             attacker_selected: '', target_selected: '',
             selected_attacker: '', selected_target: '',
             selected_has_attacked: '', first_turn: '',
-            winner: '', selected_card: '', current_move: '',
-            exodia1: [], exodia2: [], selected_sacrifices: [],
+            winner: '', selected_card: '', current_move: '', 
+            selected_sacrifices: [],
             selected_spell: '', exodia_win: "",
         }
     }
@@ -63,6 +89,7 @@ class Game extends Component {
         })
     }
 
+    // could be in Board component
     getInitialCards() {
         var shuffle = require('shuffle-array')
 
@@ -145,6 +172,9 @@ class Game extends Component {
         if (!this.state.has_drawn && this.state.phase === 0) {
             if (e.target.alt === "Deck 1" && this.state.turn === 'player1') {
                 let new_card = this.state.deck1.shift()
+
+                // don't ever directly manipulate the state without using this.setState! 
+                // this `this.state.hand1.push` is directly manipulating state
                 this.state.hand1.push(new_card)
                 this.setState({
                     hand1: this.state.hand1,
@@ -156,7 +186,11 @@ class Game extends Component {
             }
 
             else if (e.target.alt === "Deck 2" && this.state.turn === 'player2') {
+                // this `this.state.deck2.shift` is directly manipulating state
                 let new_card = this.state.deck2.shift()
+
+                // this `this.state.hand2.push` is directly manipulating state
+                // Look for other places where you are using `push`, `shift`, `pop`, `unshift` on state
                 this.state.hand2.push(new_card)
                 this.setState({
                     hand2: this.state.hand2,
