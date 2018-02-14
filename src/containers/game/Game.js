@@ -6,6 +6,7 @@ import './Game.css';
 import GamesModel from "../../models/Game";
 import Cable from 'actioncable'
 import {ProgressBar} from 'react-bootstrap'
+let shuffle = require('shuffle-array')
 
 class Game extends Component {
     constructor(){
@@ -64,7 +65,6 @@ class Game extends Component {
     }
 
     getInitialCards() {
-        var shuffle = require('shuffle-array')
 
         YugisModel.cards().then((res) => {
             let data = res.data
