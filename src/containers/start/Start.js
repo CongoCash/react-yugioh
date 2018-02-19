@@ -12,7 +12,8 @@ class Start extends Component {
             game_been_clicked: false,
             available_games: [],
             selected_id: "",
-            lifepoints1: [], lifepoints2: []
+            lifepoints1: [], lifepoints2: [],
+            background_set: false
         }
     }
 
@@ -25,6 +26,12 @@ class Start extends Component {
 
     }
 
+    setBackground = () => {
+        this.setState({
+          background_set: true
+        })
+    }
+
     createGame() {
         GamesModel.create()
         GamesModel.all().then((res) => {
@@ -35,9 +42,10 @@ class Start extends Component {
     }
 
     startGame(e) {
-
+        console.log(e.target.innerHTML.split(" ")[1])
         this.setState({
-            selected_id: e.target.innerHTML.split(" ")[1],
+            // selected_id: e.target.innerHTML.split(" ")[1],
+            selected_id: 105,
             game_been_clicked: true
         })
     }
@@ -72,44 +80,29 @@ class Start extends Component {
         })
     }
 
-    render() {
 
+  render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-2 col-sm-offset-5 background-header">
-                    </div>
-                </div>
+            <div className="container-fluid">
+
                 {!this.state.game_been_clicked ?
-                    <div className="row">
-                        <div className="col-sm-2 col-sm-offset-5">
-                            <button className="btn btn-lg btn-success center-create" onClick={this.createGame.bind(this)}>Create Game</button>
-                        </div>
-                    </div>
-                : ""}
-                {!this.state.game_been_clicked ?
-                    this.state.available_games.map((game, index) => {
-                        return(
-                            <div className="row">
-                                <div className="col-sm-2 col-sm-offset-3">
-                                    <h5>Player 1 Lifepoints: {this.state.lifepoints1[index]}</h5>
-                                    <ProgressBar now={this.state.lifepoints1[index]/8000*100} />
-                                </div>
-                                <div className="col-sm-2 no-padding">
-                                    <button className="btn btn-primary spacing-buttons margin-start" onClick={this.startGame.bind(this)}>Game {game.id}</button>
-                                    <button className="btn btn-danger spacing-buttons" onClick={() => this.deleteGame(game.id)}>Delete</button>
-                                </div>
-                                <div className="col-sm-2">
-                                    <h5>Player 2 Lifepoints: {this.state.lifepoints2[index]}</h5>
-                                    <ProgressBar now={this.state.lifepoints2[index]/8000*100} />
-                                </div>
+                  <div>
+                      <div className="start-bg-img"></div>
+                      <div className="row">
+                        <div className="col-sm-6">
+                            <div className="button-placement">
+                                <button className="btn btn-lg btn-success center-create button-glow"
+                                        onClick={this.startGame.bind(this)}>Start Game
+                                </button>
                             </div>
-                        )
-                }) : ""}
+                        </div>
+                      </div>
+                  </div>
+                  : ""}
                 {this.state.selected_id ?
-                    <Game
-                        game_id={this.state.selected_id}
-                    /> : ""
+                <Game
+                  game_id={this.state.selected_id}
+                /> : ""
                 }
             </div>
         )
