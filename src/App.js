@@ -72,6 +72,8 @@ class App extends Component {
             <div className="App">
                 <div className='stage'>
                     <Start />
+                    // Really recommend you get this working – really makes this a great standalone portfolio piece 
+                    // and lets you add an impressive skill to your resume
                     {/*<h1>Chat</h1>*/}
                     {/*<div className='chat-logs'>*/}
                     {/*</div>*/}

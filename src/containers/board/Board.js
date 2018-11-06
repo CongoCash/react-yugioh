@@ -4,15 +4,10 @@ import Spell_field from'../spell_field/Spell_field.js'
 import Monster_field from'../monster_field/Monster_field.js'
 import './Board.css';
 
-
-
 class Board extends Component {
 
     constructor(){
         super()
-        // this.state = {
-        //     hand: this.props.hand
-        // }
     }
 
     render() {
